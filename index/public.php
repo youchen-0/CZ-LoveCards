@@ -37,12 +37,12 @@
         }
         return $ip;
     }
-    $str1 = "****";
+    $str1 = "***";
     function str($str,$str1,$content){
         if ($str == "") {
             $str = "/($#%#$^)/";
         }
-        return preg_replace($str,$str1,$content);
+        return htmlspecialchars(preg_replace($str,$str1,$content));
     }
     //常用变量
     $ip = GetClientIp();

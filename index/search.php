@@ -17,7 +17,7 @@
             echo '<script>window.location.href="search.php?notifications=2&notifications_content=请填写搜索内容"</script>';
             exit;
         }
-
+		$_GET['searchcont'] = htmlspecialchars($_GET['searchcont']);
         $searchcont = Escape($conn, $_GET['searchcont']);
 
         //分页1

@@ -172,10 +172,16 @@
 
         if (empty($_POST['img'])) {
             $_POST['img'] = 'false';
+        }else{
+            $preg = "/\/\/[\w.]+[\w\/]*[\w.]*\??[\w=&\+\%]*/is";
+            if(!preg_match($preg,$_POST['img'])){
+                echo "<script>window.location.href=\"writeCard.php?notifications=2&notifications_content=请注意图片链接格式(不加http[s]:前缀)\"</script>";
+            exit;
+		}
         }
 
         if (empty($_POST['cont'])) {
-            echo "<script>window.location.href=\"writeCard.php?notifications=2&notifications_content=请输入内容\"</script>";
+            echo "<script>window.location.href=\"writeCard.phimgp?notifications=2&notifications_content=请输入内容\"</script>";
             exit;
         }
         if (mb_strlen($_POST['cont'], 'UTF8') > 120) {
