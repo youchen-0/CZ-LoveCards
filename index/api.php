@@ -254,32 +254,7 @@
         $comment_data = $page_row['name'].":".$page_row['cont']."|".$page_row['time'];
         }
 
-        //构建DATA
-        $getdata = "&bbk_name1=".$card_row['name_1']."&bbk_name2=".$card_row['name_2']."&bbk_content=".$card_row['cont']."&bbk_pl=".$card_row['comment']."&bbk_zan=".$card_row['zan']."&bbk_comment=".$comment_data."&bbk_url=http://".SYSTEM_URL."/index/card.php?id=".$card_row['id']."&img=".$card_row['img'];
-        //请求邮箱服务
-        $url= "https://api.fatda.cn/mail/api.php?toemail=".$_POST['toemail'].$getdata;//构造请求地址
-        //构建$file_content的https请求条件
-        $stream_opts = [
-            "ssl" => [
-                "verify_peer"=>false,
-                "verify_peer_name"=>false,
-            ]
-        ]; 
-        @$file_content = file_get_contents($url,false, stream_context_create($stream_opts));//发起请求并返回标准的json
-        
-        //判断请求是否失败
-        if(!$file_content){
-            echo '<script>window.location.href="email.php?notifications=2&notifications_content=邮件服务器连接失败！"</script>';
-            exit;
-        }else{
-            $arr = json_decode($file_content,true);//对json格式的字符串进行编码，同时进行数组化
-            if($arr['code'] == "501"){
-                echo '<script>window.location.href="email.php?notifications=2&notifications_content='.$arr['code'].':'.$arr['state'].'！"</script>';
-                exit;
-            }
-            echo '<script>window.location.href="email.php?notifications=1&notifications_content=邮件发送成功！"</script>';
-            exit;
-        }
+		require_once ($_SERVER['DOCUMENT_ROOT']."email/function.php");//引入发件函数
     }
 
     echo '<script>window.location.href="index.php?notifications=3&notifications_content=state参数无效"</script>';
